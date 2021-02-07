@@ -7,6 +7,8 @@ const Workout = require("../models/Workout");
 Router.get("/api/workouts", (req, res) => {
   Workout.find().then((allWorkouts) => {
     res.json(allWorkouts);
+  }).catch(err => {
+    res.json(err);
   });
 });
 
@@ -14,6 +16,8 @@ Router.get("/api/workouts", (req, res) => {
 Router.post("/api/workouts", (req, res) => {
   Workout.create(req.body).then((newWorkout) => {
     res.json(newWorkout);
+  }).catch(err => {
+    res.json(err);
   });
 });
 
@@ -24,6 +28,8 @@ Router.put("/api/workouts/:id", (req, res) => {
     $push: { exercises: req.body },
   }).then((updatedWorkout) => {
     res.json(updatedWorkout);
+  }).catch(err => {
+    res.json(err);
   });
 });
 
@@ -33,6 +39,8 @@ Router.get("/api/workouts/range", (req, res) => {
     .limit(7)
     .then((workouts) => {
       res.json(workouts);
+    }).catch(err => {
+      res.json(err);
     });
 });
 //export Router
