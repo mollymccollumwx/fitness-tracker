@@ -2,18 +2,23 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-//create an instance of express
+// create an instance of express
 const app = express();
+
+// required the controller files
+const apiController = require("./controllers/api-routes");
+const viewsController = require("./controllers/views");
+
 
 // PORT
 const PORT = process.env.PORT || 8080;
 
-//middleware
+// middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-//connect mongoDB
+// connect mongoDB
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/fitness-tracker",
   {
@@ -34,6 +39,10 @@ connection.on("connected", () => {
 connection.on("error", (err) => {
   console.log("Mongoose connection error: " + err);
 });
+
+// use the routes from the controller files
+app.use(apiController);
+app.use(viewsController);
 
 
 // listen on the PORT
