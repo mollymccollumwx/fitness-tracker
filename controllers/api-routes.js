@@ -1,4 +1,4 @@
-//require dependencies 
+//require dependencies & create router instance
 const express = require("express");
 const Router = express.Router();
 const db = require("../models");
@@ -17,4 +17,5 @@ Router.post("/api/workouts", (req, res) => {
   });
 });
 
+//export Router
 module.exports = Router;
