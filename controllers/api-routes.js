@@ -5,32 +5,42 @@ const Workout = require("../models/Workout");
 
 // GET route for all workouts
 Router.get("/api/workouts", (req, res) => {
-  Workout.find().then((allWorkouts) => {
-    res.json(allWorkouts);
-  }).catch(err => {
-    res.json(err);
-  });
+  Workout.find()
+    .then((allWorkouts) => {
+      res.json(allWorkouts);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
 // POST route for a new workout
 Router.post("/api/workouts", (req, res) => {
-  Workout.create(req.body).then((newWorkout) => {
-    res.json(newWorkout);
-  }).catch(err => {
-    res.json(err);
-  });
+  Workout.create(req.body)
+    .then((newWorkout) => {
+      res.json(newWorkout);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
 // PUT route for creating a new workout or updating one
 Router.put("/api/workouts/:id", (req, res) => {
   const id = req.params.id;
-  Workout.findByIdAndUpdate(id, {
-    $push: { exercises: req.body },
-  }).then((updatedWorkout) => {
-    res.json(updatedWorkout);
-  }).catch(err => {
-    res.json(err);
-  });
+  Workout.findByIdAndUpdate(
+    id,
+    {
+      $push: { exercises: req.body },
+    },
+    { new: true }
+  )
+    .then((updatedWorkout) => {
+      res.json(updatedWorkout);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
 // GET route to find last 7 workouts
@@ -39,7 +49,8 @@ Router.get("/api/workouts/range", (req, res) => {
     .limit(7)
     .then((workouts) => {
       res.json(workouts);
-    }).catch(err => {
+    })
+    .catch((err) => {
       res.json(err);
     });
 });
